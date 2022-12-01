@@ -1,7 +1,5 @@
 package me.reckter.aoc.cords.d2
 
-import me.reckter.aoc.cords.d3.plus
-
 /**
  *           2D
  */
@@ -19,7 +17,7 @@ operator fun Cord2D<Int>.plus(other: Cord2D<Int>): Cord2D<Int> {
 }
 
 fun Cord2D<Int>.getNeighbors(noEdges: Boolean = false): List<Cord2D<Int>> {
-    if (noEdges)
+    if (noEdges) {
         return listOf(
             0 to -1,
             0 to 1,
@@ -29,6 +27,7 @@ fun Cord2D<Int>.getNeighbors(noEdges: Boolean = false): List<Cord2D<Int>> {
             .map {
                 this + Cord2D(it.first, it.second)
             }
+    }
 
     return (-1..1).flatMap { xOffset ->
         (-1..1).map { yOffset ->

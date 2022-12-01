@@ -11,7 +11,7 @@ data class Hex(
         SouthEast(Hex(0, -1, +1)),
         SouthWest(Hex(-1, 0, +1)),
         West(Hex(-1, +1, 0)),
-        NorthWest(Hex(0, +1, -1)),
+        NorthWest(Hex(0, +1, -1))
     }
 }
 

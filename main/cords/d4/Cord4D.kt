@@ -1,7 +1,5 @@
 package me.reckter.aoc.cords.d4
 
-import me.reckter.aoc.cords.d3.plus
-
 data class Cord4D<T : Number>(
     val x: T,
     val y: T,

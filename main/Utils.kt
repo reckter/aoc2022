@@ -68,17 +68,21 @@ private fun Double.scale(scale: Int) =
 fun <T : Day> solve(
     enablePartOne: Boolean = true,
     enablePartTwo: Boolean = true,
-    clazz: Class<T>,
+    clazz: Class<T>
 ) {
     val day = clazz.kotlin.createInstance()
 
     val partOneNanos = if (enablePartOne) {
         measureNanoTime { day.solvePart1() }
-    } else null
+    } else {
+        null
+    }
 
     val partTwoNanos = if (enablePartTwo) {
         measureNanoTime { day.solvePart2() }
-    } else null
+    } else {
+        null
+    }
 
     println()
     partOneNanos?.logTime("solution 1")
@@ -86,7 +90,7 @@ fun <T : Day> solve(
 }
 
 fun <T : Day> timed(
-    clazz: Class<T>,
+    clazz: Class<T>
 ) {
     val day = clazz.kotlin.createInstance()
 
@@ -166,11 +170,13 @@ fun <T> T.print(name: String) = this.also { println("$name: $it") }
 
 fun <T> T.solution(part: Int) {
     this.print("Solution $part")
-    if (Context.overwritingSolutions)
+    if (Context.overwritingSolutions) {
         saveSolution(part, this.toString())
+    }
 
-    if (Context.testMode)
+    if (Context.testMode) {
         checkSolution(part, this.toString())
+    }
 }
 
 fun <E, F> Sequence<E>.allPairings(with: Iterable<F>): Sequence<Pair<E, F>> {
@@ -199,15 +205,18 @@ fun <E> List<E>.allPairings(
     return this
         .asSequence()
         .mapIndexed { index, it ->
-            val others = if (bothDirections)
+            val others = if (bothDirections) {
                 this
-            else
+            } else {
                 this.subList(index, this.size)
+            }
 
             others.mapNotNull { other ->
-                if (it != other || includeSelf)
+                if (it != other || includeSelf) {
                     it to other
-                else null
+                } else {
+                    null
+                }
             }
         }
         .flatten()
@@ -344,7 +353,7 @@ fun Long.digits() = this.toString().map { it.toString().toInt() }
 
 fun List<Int>.toLong(): Long {
     return this.reversed()
-        .mapIndexed{ index, it -> it * 10.0.pow(index).toLong()}
+        .mapIndexed { index, it -> it * 10.0.pow(index).toLong() }
         .sum()
 }
 
@@ -434,7 +443,6 @@ fun gcd(a: Long, b: Long): Long = if (b == 0L) a else gcd(b, a % b)
 fun lcm(a: Long, b: Long): Long = a / gcd(a, b) * b
 
 fun fastExp(aBase: Long, aExponent: Long, module: Long): Long {
-
     var base = aBase
     var exponent = aExponent
     var result = 1L
@@ -445,8 +453,9 @@ fun fastExp(aBase: Long, aExponent: Long, module: Long): Long {
     while (exponent != 0L) {
         exponent = exponent shr 1
         base = (base * base) % module
-        if (exponent % 2 == 1L)
+        if (exponent % 2 == 1L) {
             result = (result * base) % module
+        }
     }
     return result
 }

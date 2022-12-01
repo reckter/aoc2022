@@ -69,6 +69,7 @@ class AllCombinationsTest {
             )
         }
     }
+
     @Test
     fun `should spit out all combinations bot only once`() {
         val start = listOf(1, 2, 3)

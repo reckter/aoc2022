@@ -15,13 +15,13 @@ interface Day {
     fun solvePart2()
 
     fun loadInput(part: Int = 0, trim: Boolean = true): List<String> {
-
         if (!File("input").exists()) {
             File("input").mkdir()
         }
 
-        if (part != 0)
+        if (part != 0) {
             return readLines("input/${day}_$part.txt")
+        }
 
         if (!Files.exists(File("input/$day.txt").toPath())) {
             println("downloading file for input $day...")
@@ -32,7 +32,7 @@ interface Day {
             }
 
             val req = Request.Builder()
-                .url("https://adventofcode.com/2021/day/$day/input")
+                .url("https://adventofcode.com/2022/day/$day/input")
                 .addHeader("cookie", "session=${sessionFile.readText().trim()}")
                 .build()
             val res = client.newCall(req).execute()
@@ -50,8 +50,9 @@ interface Day {
             .let {
                 if (trim) {
                     it.filter { it.isNotBlank() }
-                } else
+                } else {
                     it
+                }
             }
     }
 }
