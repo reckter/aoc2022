@@ -258,7 +258,30 @@ fun <Node> dijkstraBigDecimal(
     getNeighbors: (from: Node) -> List<Node>,
     getWeightBetweenNodes: (from: Node, to: Node) -> BigDecimal
 ): Pair<List<Node>, BigDecimal> {
-    return dijkstra(start, end, 0.toBigDecimal(), BigDecimal::plus, getNeighbors, getWeightBetweenNodes)
+    return dijkstraBigDecimal(
+        start,
+        isEnd = { it == end },
+        getNeighbors,
+        getWeightBetweenNodes
+    )
+}
+
+fun <Node> dijkstraBigDecimal(
+    start: Node,
+    isEnd: (it: Node) -> Boolean,
+    getNeighbors: (from: Node) -> List<Node>,
+    getWeightBetweenNodes: (from: Node, to: Node) -> BigDecimal
+): Pair<List<Node>, BigDecimal> {
+    return dijkstra(start, isEnd, 0.toBigDecimal(), BigDecimal::plus, getNeighbors, getWeightBetweenNodes)
+}
+
+fun <Node> dijkstraDouble(
+    start: Node,
+    isEnd: (it: Node) -> Boolean,
+    getNeighbors: (from: Node) -> List<Node>,
+    getWeightBetweenNodes: (from: Node, to: Node) -> Double
+): Pair<List<Node>, Double> {
+    return dijkstra(start, isEnd, 0.0, Double::plus, getNeighbors, getWeightBetweenNodes)
 }
 
 fun <Node> dijkstraDouble(
@@ -267,7 +290,12 @@ fun <Node> dijkstraDouble(
     getNeighbors: (from: Node) -> List<Node>,
     getWeightBetweenNodes: (from: Node, to: Node) -> Double
 ): Pair<List<Node>, Double> {
-    return dijkstra(start, end, 0.0, Double::plus, getNeighbors, getWeightBetweenNodes)
+    return dijkstraDouble(
+        start,
+        isEnd = { it == end },
+        getNeighbors,
+        getWeightBetweenNodes
+    )
 }
 
 fun <Node> dijkstraInt(
@@ -276,7 +304,16 @@ fun <Node> dijkstraInt(
     getNeighbors: (from: Node) -> List<Node>,
     getWeightBetweenNodes: (from: Node, to: Node) -> Int
 ): Pair<List<Node>, Int> {
-    return dijkstra(start, end, 0, Int::plus, getNeighbors, getWeightBetweenNodes)
+    return dijkstraInt(start, isEnd = { it == end }, getNeighbors, getWeightBetweenNodes)
+}
+
+fun <Node> dijkstraInt(
+    start: Node,
+    isEnd: (it: Node) -> Boolean,
+    getNeighbors: (from: Node) -> List<Node>,
+    getWeightBetweenNodes: (from: Node, to: Node) -> Int
+): Pair<List<Node>, Int> {
+    return dijkstra(start, isEnd, 0, Int::plus, getNeighbors, getWeightBetweenNodes)
 }
 
 fun <Node> dijkstraLong(
@@ -285,12 +322,21 @@ fun <Node> dijkstraLong(
     getNeighbors: (from: Node) -> List<Node>,
     getWeightBetweenNodes: (from: Node, to: Node) -> Long
 ): Pair<List<Node>, Long> {
-    return dijkstra(start, end, 0L, Long::plus, getNeighbors, getWeightBetweenNodes)
+    return dijkstraLong(start, isEnd = { it == end }, getNeighbors, getWeightBetweenNodes)
+}
+
+fun <Node> dijkstraLong(
+    start: Node,
+    isEnd: (it: Node) -> Boolean,
+    getNeighbors: (from: Node) -> List<Node>,
+    getWeightBetweenNodes: (from: Node, to: Node) -> Long
+): Pair<List<Node>, Long> {
+    return dijkstra(start, isEnd, 0L, Long::plus, getNeighbors, getWeightBetweenNodes)
 }
 
 fun <Node, Weight> dijkstra(
     start: Node,
-    end: Node,
+    isEnd: (Node) -> Boolean,
     zero: Weight,
     add: (a: Weight, b: Weight) -> Weight,
     getNeighbors: (from: Node) -> List<Node>,
@@ -304,7 +350,7 @@ fun <Node, Weight> dijkstra(
     while (queue.isNotEmpty()) {
         val next = queue.remove()
 
-        if (next.first.last() == end) {
+        if (isEnd(next.first.last())) {
             return next
         }
         getNeighbors(next.first.last())
@@ -335,6 +381,7 @@ fun <E> LinkedList<E>.rotateRight(by: Int) {
             repeat(-by) {
                 this.addFirst(this.removeLast())
             }
+
         by > 0 ->
             repeat(by) {
                 this.addLast(this.removeFirst())
@@ -411,6 +458,7 @@ fun <T> Iterable<T>.splitBeforeEach(predicate: (T) -> Boolean): Iterable<Iterabl
         lists
     }
 }
+
 fun <T> Iterable<T>.splitAt(predicate: (T) -> Boolean): Iterable<Iterable<T>> {
     return this.fold(mutableListOf(mutableListOf<T>())) { lists, element ->
         if (predicate(element)) {
