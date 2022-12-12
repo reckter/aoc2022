@@ -358,12 +358,10 @@ fun <Node, Weight> dijkstra(
             .forEach {
                 seen.add(it)
                 queue.add(
-                    (next.first + it) to (
-                        add(
-                            next.second,
-                            getWeightBetweenNodes(next.first.last(), it)
-                        )
-                        )
+                    (next.first + it) to add(
+                        next.second,
+                        getWeightBetweenNodes(next.first.last(), it)
+                    )
                 )
             }
     }

@@ -37,7 +37,7 @@ class Day12 : Day {
     }
 
     override fun solvePart2() {
-        dijkstraInt<Cord2D<Int>>(
+        dijkstraInt(
             start = endPoint,
             isEnd = { heightMap[it]!! == 0 },
             getNeighbors = { node ->
