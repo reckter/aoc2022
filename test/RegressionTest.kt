@@ -17,6 +17,8 @@ class RegressionTest {
         println(Context)
         println()
         solve(enablePartOne = true, enablePartTwo = true, clazz = clazz)
+        println()
+        println()
     }
 
     companion object {

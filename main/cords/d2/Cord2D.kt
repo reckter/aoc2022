@@ -1,5 +1,9 @@
 package me.reckter.aoc.cords.d2
 
+import java.lang.Integer.max
+import kotlin.math.absoluteValue
+import kotlin.math.sign
+
 /**
  *           2D
  */
@@ -35,4 +39,21 @@ fun Cord2D<Int>.getNeighbors(noEdges: Boolean = false): List<Cord2D<Int>> {
         }
     }
         .filter { it != this }
+}
+
+fun Cord2D<Int>.lineTo(end: Cord2D<Int>): List<Cord2D<Int>> {
+    val result = mutableListOf<Cord2D<Int>>()
+    val xDiff = end.x - this.x
+    val yDiff = end.y - this.y
+    val xDir = xDiff.sign
+    val yDir = yDiff.sign
+    val xSteps = xDiff.absoluteValue
+    val ySteps = yDiff.absoluteValue
+    val steps = max(xSteps, ySteps)
+    for (i in 0..steps) {
+        val x = this.x + (i * xDir * xSteps / steps)
+        val y = this.y + (i * yDir * ySteps / steps)
+        result.add(Cord2D(x, y))
+    }
+    return result
 }
