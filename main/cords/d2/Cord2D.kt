@@ -57,3 +57,7 @@ fun Cord2D<Int>.lineTo(end: Cord2D<Int>): List<Cord2D<Int>> {
     }
     return result
 }
+
+fun Cord2D<Int>.manhattenDistance(to: Cord2D<Int>): Int {
+    return Math.abs(this.x - to.x) + Math.abs(this.y - to.y)
+}
